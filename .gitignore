@@ -1,0 +1,18 @@
+# Compilação
+/build/
+*.o
+*.out
+*.exe
+
+# Arquivos de dados
+/data/
+*.log
+*.sst
+
+# IDEs
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
