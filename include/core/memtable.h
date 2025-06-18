@@ -1,9 +1,10 @@
 #pragma once
+
 #include "core/record.h"
-#include <map>
-#include <string>
+#include "core/skiplist.h"
 #include <optional>
 #include <vector>
+#include <memory>
 
 class MemTable {
 public:
@@ -14,11 +15,9 @@ public:
     std::optional<Record> get(const std::string& key) const;
 
     std::vector<Record> dump() const;
-
     void clear();
     size_t size_bytes() const;
 
 private:
-    std::map<std::string, Record> table;
-    size_t approximate_size;
+    std::unique_ptr<SkipList> table;
 };

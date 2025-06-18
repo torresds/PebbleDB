@@ -1,47 +1,29 @@
 #include "core/memtable.h"
 
-MemTable::MemTable() : approximate_size(0) {}
+MemTable::MemTable() {
+    table = std::make_unique<SkipList>();
+}
 
 void MemTable::put(const std::string& key, const std::string& value) {
-    approximate_size -= table.count(key) ? (table[key].key.size() + table[key].value.size()) : 0;
-    
-    Record rec(key, value, false);
-    table[key] = rec;
-    
-    approximate_size += key.size() + value.size();
+    table->put(key, value);
 }
 
 void MemTable::del(const std::string& key) {
-    approximate_size -= table.count(key) ? (table[key].key.size() + table[key].value.size()) : 0;
-
-    Record tombstone(key, "", true);
-    table[key] = tombstone;
-
-    approximate_size += key.size();
+    table->del(key);
 }
 
 std::optional<Record> MemTable::get(const std::string& key) const {
-    auto it = table.find(key);
-    if (it != table.end()) {
-        return it->second;
-    }
-    return std::nullopt;
+    return table->get(key);
 }
 
 std::vector<Record> MemTable::dump() const {
-    std::vector<Record> records;
-    records.reserve(table.size());
-    for (const auto& pair : table) {
-        records.push_back(pair.second);
-    }
-    return records;
+    return table->dump();
 }
 
 void MemTable::clear() {
-    table.clear();
-    approximate_size = 0;
+    table = std::make_unique<SkipList>();
 }
 
 size_t MemTable::size_bytes() const {
-    return approximate_size;
+    return table->size_bytes();
 }
