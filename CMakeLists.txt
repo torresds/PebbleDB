@@ -14,6 +14,9 @@ add_library(pebble_core STATIC
     src/core/record.cpp
     src/core/memtable.cpp
     src/core/wal.cpp
+    src/core/skiplist.cpp
+    src/db/db.cpp
+    src/storage/sstable.cpp
 )
 
 target_include_directories(pebble_core PUBLIC include)
