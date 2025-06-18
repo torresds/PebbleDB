@@ -9,7 +9,7 @@ WAL::WAL(const std::string& wal_path) : path(wal_path) {
 
     out_stream.open(path, std::ios::binary | std::ios::app);
     if (!out_stream) {
-        throw std::runtime_error("Failed to open WAL file for writing: " + path);
+        throw std::runtime_error("Erro ao abrir arquivo WAL para escrita: " + path);
     }
 }
 
@@ -43,6 +43,6 @@ void WAL::clear() {
     out_stream.close();
     out_stream.open(path, std::ios::binary | std::ios::trunc);
     if (!out_stream) {
-        throw std::runtime_error("Failed to clear WAL file: " + path);
+        throw std::runtime_error("Erro ao dar clase no arquivo WAL: " + path);
     }
 }
