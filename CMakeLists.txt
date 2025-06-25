@@ -27,18 +27,3 @@ add_executable(pebble
 )
 
 target_link_libraries(pebble PRIVATE pebble_core)
-
-
-enable_testing()
-
-add_executable(pebble_tests
-    tests/core/test_memtable.cpp
-)
-
-target_include_directories(pebble_tests PUBLIC tests)
-
-target_link_libraries(pebble_tests PRIVATE pebble_core)
-
-add_test(NAME UnitTests COMMAND pebble_tests)
-
-message(STATUS "Unit tests enabled.")

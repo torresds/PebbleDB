@@ -12,7 +12,7 @@ class SkipList {
 private:
     struct Node {
         Record record;
-        std::vector<std::unique_ptr<Node>> forward;
+        std::vector<std::shared_ptr<Node>> forward;
 
         Node(int level, Record rec);
     };
@@ -30,10 +30,11 @@ private:
     int random_level();
     void update_internal(const Record& record);
 
-    std::unique_ptr<Node> head;
+    std::shared_ptr<Node> head;
     int current_level;
     size_t approximate_size;
 
     std::mt19937 rng;
     std::uniform_int_distribution<int> dist;
+
 };

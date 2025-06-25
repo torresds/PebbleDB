@@ -10,7 +10,7 @@ SkipList::SkipList() : current_level(0), approximate_size(0) {
     dist = std::uniform_int_distribution<int>(0, 1);
 
     Record head_record{"", "", true};
-    head = std::make_unique<Node>(SKIPLIST_MAX_LEVEL, head_record);
+    head = std::make_shared<Node>(SKIPLIST_MAX_LEVEL, head_record);
 }
 
 int SkipList::random_level() {
@@ -59,12 +59,12 @@ void SkipList::update_internal(const Record& record) {
         current_level = new_lvl;
     }
 
-    auto new_node = std::make_unique<Node>(new_lvl, record);
+    auto new_node = std::make_shared<Node>(new_lvl, record);
     approximate_size += (record.key.size() + record.value.size());
 
     for (int i = 0; i <= new_lvl; i++) {
         new_node->forward[i] = std::move(update[i]->forward[i]);
-        update[i]->forward[i] = std::move(new_node);
+        update[i]->forward[i] = new_node;
     }
 }
 
